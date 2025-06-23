@@ -17,7 +17,7 @@ pipeline {
     stage('Build Docker Image') {
       steps {
         script {
-          sh 'docker build -f Dockerfile.dev -t $IMAGE_NAME .'
+          bat 'docker build -f Dockerfile.dev -t $IMAGE_NAME .'
         }
       }
     }
@@ -25,7 +25,7 @@ pipeline {
     stage('Run Tests') {
       steps {
         script {
-          sh 'docker run --rm $IMAGE_NAME npm test'
+          bat 'docker run --rm $IMAGE_NAME npm test'
         }
       }
     }
