@@ -1,33 +1,27 @@
 pipeline {
-  agent any
+    agent any
 
-  environment {
-    IMAGE_NAME = 'my-next-app'
-    CONTAINER_NAME = 'my-next-app-container'
-  }
-
-  stages {
-
-    stage('Checkout') {
-      steps {
-        checkout scm
-      }
+    environment {
+        IMAGE_NAME = "my-next-app"
     }
 
-    stage('Build Docker Image') {
-      steps {
-        script {
-          bat 'docker build -f Dockerfile.dev -t $IMAGE_NAME .'
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
         }
-      }
-    }
 
-    stage('Run Tests') {
-      steps {
-        script {
-          bat 'docker run --rm $IMAGE_NAME npm test'
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -f Dockerfile.dev -t %IMAGE_NAME% .'
+            }
         }
-      }
+
+        stage('Run Tests') {
+            steps {
+                bat 'docker run --rm %IMAGE_NAME% npm test'
+            }
+        }
     }
-  }
 }
