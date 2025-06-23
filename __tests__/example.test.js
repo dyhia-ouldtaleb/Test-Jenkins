@@ -1,5 +1,6 @@
-describe('Exemple simple', () => {
-  it('1 + 1 devrait égaler 2', () => {
-    expect(1 + 1).toBe(2);
+describe('Test simple', () => {
+  test('Affichage test réussi', () => {
+    console.log('✅ Test réussi');
+    expect(true).toBe(true);
   });
 });
