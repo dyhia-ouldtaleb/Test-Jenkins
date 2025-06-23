@@ -1,0 +1,10 @@
+FROM node:18-alpine
+RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+# RUN chown -R nextjs:nodejs /app
+USER nextjs
+EXPOSE 3000
+CMD ["npm", "run", "dev"]
