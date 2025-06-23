@@ -1,17 +1,23 @@
 pipeline {
   agent any
 
+  environment {
+    IMAGE_NAME = 'my-next-app'
+    CONTAINER_NAME = 'my-next-app-container'
+  }
+
   stages {
+
     stage('Checkout') {
       steps {
-        git url: 'https://github.com/dyhia-ouldtaleb/Test-Jenkins.git', branch: 'main'
+        checkout scm
       }
     }
 
     stage('Build Docker Image') {
       steps {
         script {
-          docker.build('my-next-app')
+          sh 'docker build -f Dockerfile.dev -t $IMAGE_NAME .'
         }
       }
     }
@@ -19,9 +25,7 @@ pipeline {
     stage('Run Tests') {
       steps {
         script {
-          docker.image('my-next-app').inside {
-            sh 'npm test'
-          }
+          sh 'docker run --rm $IMAGE_NAME npm test'
         }
       }
     }
